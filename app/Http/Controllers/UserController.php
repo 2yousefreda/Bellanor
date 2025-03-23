@@ -4,14 +4,22 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Treits\HttpResponses;
 class UserController extends Controller
 {
+    use HttpResponses;
     public function index(){
-       
-        
-        
-        return new UserCollection(User::all());
+        $users= new UserCollection(User::all());
+        return $this->Success([
+            "user"=> $users
+        ]);
+    }
+    public function show(Request $request){
+        $user= new UserResource(Auth::user());
+        return $this->Success([
+            "user"=> $user
+        ]);
     }
 }
