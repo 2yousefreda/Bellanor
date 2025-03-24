@@ -3,7 +3,10 @@
 namespace App\Http\Requests;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
+
 use Illuminate\Support\Facades\Auth;
+
+
 class UpdateUserRequest extends FormRequest
 {
     /**
@@ -21,7 +24,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-       
+    
         $EmailRules =['string','email','max:255','unique:users'];
         
         if($this->email==Auth::user()->email){
@@ -33,6 +36,7 @@ class UpdateUserRequest extends FormRequest
                 'name' => ['string','max:255'],
                 'email' => $EmailRules ,
                 'age' => ['integer','max:80'],
+                'image' => ['image','max:2048'],
             ];
         }else{
 
@@ -40,6 +44,7 @@ class UpdateUserRequest extends FormRequest
                 'name' => ['string','max:255'],
                 'email' => $EmailRules,
                 'age' => ['integer','max:80'],
+                'image' => ['image','max:2048'],
                 'password' => ['string','confirmed',Password::defaults()],
             ];
         }

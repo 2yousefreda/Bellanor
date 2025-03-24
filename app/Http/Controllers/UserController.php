@@ -24,9 +24,19 @@ class UserController extends Controller
         ]);
     }
     public function update(UpdateUserRequest $request){
-        $date= $request->validated();
+        $data= $request->validated();
+        
+        if($request->hasFile("image")){
+            if(request()->user()->image!=null){
+                
+                $data["image"]= StoreImage($data['image'],'UsersImages',request()->user()->image);
+            }else{
+                
+                $data["image"]= StoreImage($data['image'],'UsersImages');
+            }
+        }
         $user= request()->user();
-        $user->update($date);
+        $user->update($data);
         $user= new UserResource( Auth::user());
         return $this->Success([
             "user"=> $user

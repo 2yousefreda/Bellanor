@@ -28,6 +28,7 @@ class StoreMessageRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd(request()->all());
         return [
             'content' => ['required', 'string', 'max:555'],
             'image' => ['nullable','image', 'max:2048'],

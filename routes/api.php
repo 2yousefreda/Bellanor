@@ -14,12 +14,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     
     Route::get('messages', [MessageController::class,'index']);
+    Route::get('users', [UserController::class,'index']);
+    Route::put('update-profile', [UserController::class,'update']);
+    Route::get('profile', [UserController::class,'show']);
+    Route::post('logout  ', [AuthController::class, 'logout']);
     Route::get('message/{message}', [MessageController::class,'show']);
     Route::delete('message/{message}', [MessageController::class,'delete']);
-    Route::get('users', [UserController::class,'index']);
-    Route::get('profile', [UserController::class,'show']);
-    Route::put('profile', [UserController::class,'update']);
-    Route::post('/logout  ', [AuthController::class, 'logout']);
     
 });
-Route::post('/{username}', [MessageController::class, 'store']);
+Route::post('{username}', [MessageController::class, 'store']);
