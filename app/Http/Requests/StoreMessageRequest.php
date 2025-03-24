@@ -22,7 +22,7 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string', 'max:555'],
             'image' => ['nullable', 'max:2048'],
             'user_id' => ['nullable', 'integer'],
         ];

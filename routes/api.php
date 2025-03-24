@@ -13,11 +13,11 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/{username}', [MessageController::class, 'store']);
-
 Route::post('/register  ', [AuthController::class, 'register']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('messages', MessageController::class);
     Route::get('profile', [UserController::class,'show']);
+    Route::get('message/{message}', [MessageController::class,'show']);
     Route::get('users', [UserController::class,'index']);
     Route::post('/logout  ', [AuthController::class, 'logout']);
  

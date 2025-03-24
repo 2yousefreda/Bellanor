@@ -13,14 +13,25 @@ class MessageController extends Controller
 {
     use HttpResponses;
     public function index(){
-        return new MessageCollection(Message::where("user_id",Auth::user()->id)->get());
+        $Messages=new MessageCollection(Message::where("user_id",Auth::user()->id)->get());
+        return $this->Success($Messages);
     }
     public function store($username,StoreMessageRequest $request){
         $Message=$request->validated();
         $Message["user_id"]=User::where("username",$username)->first()->id;
+        if(request()->hasFile('image')){
+            $Message["image"]=StoreImage($request->file('image'),'MessageImages');
+        }
         $Message=new MessageResource(Message::create( $Message));
         return $this->Success([
             "message"=> $Message
         ]);
+    }
+    public function show(Message $Message){
+        if($Message->user_id!=Auth::user()->id){
+            return $this->Error('',"You are not authorized to view this message",401);
+        }
+        $Message=new MessageResource($Message);
+        return $this->Success($Message);
     }
 }

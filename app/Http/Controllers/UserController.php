@@ -16,7 +16,7 @@ class UserController extends Controller
             "user"=> $users
         ]);
     }
-    public function show(Request $request){
+    public function show(){
         $user= new UserResource(Auth::user());
         return $this->Success([
             "user"=> $user
