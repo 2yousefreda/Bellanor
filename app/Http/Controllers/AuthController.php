@@ -26,10 +26,12 @@ class AuthController extends Controller
     }
     public function Register(StoreUserRequest $request){
         $request->validated($request->all());
+        
         $user= User::create([
             'name'=>$request->name,
             'email'=>$request->email,
             'username'=>$request->username,
+            'age'=>$request->age,
             'password'=>Hash::make($request->password),
         ]
         );
@@ -39,7 +41,7 @@ class AuthController extends Controller
         ]);
     }
     public function Logout(){
-        Auth::user()->currentAccessToken()->delete();
+       Auth::user()->currentAccessToken()->delete();
         return $this->Success([
             'message'=>'Logged out successfully'
         ]);

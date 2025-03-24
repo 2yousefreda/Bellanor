@@ -7,18 +7,19 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
 
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/{username}', [MessageController::class, 'store']);
+
 Route::post('/register  ', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::apiResource('messages', MessageController::class);
-    Route::get('profile', [UserController::class,'show']);
+    
+    Route::get('messages', [MessageController::class,'index']);
     Route::get('message/{message}', [MessageController::class,'show']);
+    Route::delete('message/{message}', [MessageController::class,'delete']);
     Route::get('users', [UserController::class,'index']);
+    Route::get('profile', [UserController::class,'show']);
+    Route::put('profile', [UserController::class,'update']);
     Route::post('/logout  ', [AuthController::class, 'logout']);
- 
+    
 });
+Route::post('/{username}', [MessageController::class, 'store']);

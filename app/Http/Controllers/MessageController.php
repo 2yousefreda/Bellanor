@@ -17,6 +17,9 @@ class MessageController extends Controller
         return $this->Success($Messages);
     }
     public function store($username,StoreMessageRequest $request){
+        if(!User::where("username",$username)->exists()){
+            return $this->Error('',"User not found",404);
+        }
         $Message=$request->validated();
         $Message["user_id"]=User::where("username",$username)->first()->id;
         if(request()->hasFile('image')){
@@ -33,5 +36,12 @@ class MessageController extends Controller
         }
         $Message=new MessageResource($Message);
         return $this->Success($Message);
+    }
+    public function delete(Message $Message){
+        if($Message->user_id!=Auth::user()->id){
+            return $this->Error('',"You are not authorized to delete this message",401);
+        }
+        $Message->delete();
+        return $this->Success('',"Message deleted successfully");
     }
 }

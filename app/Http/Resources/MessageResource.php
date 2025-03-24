@@ -15,10 +15,10 @@ class MessageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "Id"=> $this->id,
-            "Content"=> $this->content,
-            "Image"=> $this->image,
-            "Created_at"=> $this->created_at,
+            "id"=> $this->id,
+            "content"=> $this->content,
+            "image"=> $this->image,
+            "created_at"=> $this->created_at,
         ];
     }
 }

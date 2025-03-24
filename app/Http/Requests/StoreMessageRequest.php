@@ -3,15 +3,22 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Treits\HttpResponses;
 class StoreMessageRequest extends FormRequest
 {
+    use HttpResponses;
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize()
     {
-        return true;
+        
+       return true;
+
+           
+        
     }
 
     /**
@@ -23,7 +30,7 @@ class StoreMessageRequest extends FormRequest
     {
         return [
             'content' => ['required', 'string', 'max:555'],
-            'image' => ['nullable', 'max:2048'],
+            'image' => ['nullable','image', 'max:2048'],
             'user_id' => ['nullable', 'integer'],
         ];
     }
