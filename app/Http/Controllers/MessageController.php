@@ -31,6 +31,7 @@ class MessageController extends Controller
         ]);
     }
     public function show(Message $Message){
+        
         if($Message->user_id!=Auth::user()->id){
             return $this->Error('',"You are not authorized to view this message",401);
         }

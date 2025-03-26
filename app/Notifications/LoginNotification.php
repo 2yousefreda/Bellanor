@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Stevebauman\Location\Facades\Location;
 
 class LoginNotification extends Notification
 {
@@ -14,16 +15,25 @@ class LoginNotification extends Notification
     public $Subject;
     public $FromEmail;
     public $Mailer;
-
+    public $Location;
+    public $Device;
     /**
      * Create a new notification instance.
      */
     public function __construct()
     {
         $this->Message = "You have successfully logged in";
-        $this->Subject = "hi";
+        $this->Subject = "Login Notification";
         $this->FromEmail = "Test@yousef.com";
         $this->Mailer = 'smtp';
+       $this->Location=Location::get("156.201.178.90");
+       $this->Location=[
+        "Ip"=>$this->Location->ip,
+        "CountryName"=>$this->Location->countryName,
+        "RegionName"=>$this->Location->regionName,
+        "CityName"=>$this->Location->cityName,
+    ];
+        
     }
 
     /**
@@ -41,16 +51,26 @@ class LoginNotification extends Notification
      */
     public function toMail($notifiable): MailMessage
     {
-        $ip=request()->ip();
+  
         
-        $Message = $this->Message. " from IP: $ip";
+        
+        $Message = $this->Message. " from Location:\n" ;
+        
+
         $UserName = $notifiable->name ?? 'User';
         return (new MailMessage)
             ->mailer('smtp')
             ->subject($this->Subject)
             ->greeting('Hello '. $UserName)
-            ->line($this->Message);
-            // ->action('Notification Action', url('/'))
+            ->line($Message)
+            ->line( "IP:".$this->Location['Ip'])
+            ->line( "CityName:".$this->Location['CityName'])
+            ->line( "RegionName:".$this->Location['RegionName'])
+            ->line( "CityName:".$this->Location['CityName'])
+            ->line( "At: ".now());
+           
+            
+            
     }
 
     /**

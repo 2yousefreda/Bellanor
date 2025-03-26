@@ -12,7 +12,5 @@ class Message extends Model
         'content',
         'image',
         'user_id',
-        
-    
     ];
 }
