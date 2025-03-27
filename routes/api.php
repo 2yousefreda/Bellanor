@@ -15,10 +15,11 @@ Route::post('reset-password', [AuthController::class,'ResetPassword']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::group(['middleware'=> [EmailIsVerified::class]], function () {
-        Route::get('messages', [MessageController::class,'index']);
+        Route::get('messages', [MessageController::class,'Index']);
         Route::put('update-profile', [UserController::class,'update']);
         Route::get('profile', [UserController::class,'show']);
         Route::get('messages/{message}', [MessageController::class,'show']);
+        Route::put('messages/{message}', [MessageController::class,'Favorite']);
         Route::delete('messages/{message}', [MessageController::class,'delete']);
     });
 
@@ -27,5 +28,5 @@ Route::post('logout  ', [AuthController::class, 'logout']);
 Route::post('email-verification', [AuthController::class, 'EmailVerification']);
 Route::post('resend-email-verification', [AuthController::class, 'ResendEmailVerification']);
 });
-
 Route::post('{username}', [MessageController::class, 'store']);
+

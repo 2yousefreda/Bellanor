@@ -3,22 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Treits\HttpResponses;
-class StoreMessageRequest extends FormRequest
+
+class UpdateMessageRequest extends FormRequest
 {
-    use HttpResponses;
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        
-       return true;
-
-           
-        
+        return true;
     }
 
     /**
@@ -28,11 +21,8 @@ class StoreMessageRequest extends FormRequest
      */
     public function rules(): array
     {
-        
         return [
-            'content' => ['required', 'string', 'max:555'],
-            'image' => ['nullable','image', 'max:2048'],
-            'anonymous' => ['nullable','boolean'],
+            'favorite' => ['required','boolean'],
         ];
     }
 }

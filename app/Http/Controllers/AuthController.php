@@ -24,7 +24,7 @@ class AuthController extends Controller
 {
     use HttpResponses;
     public function Login(LoginUserRequest $request){
-        $request->validated($request->all());
+        $request->validated();
         if(!Auth::attempt($request->only('email','password'))){
             return $this->Error('','Credentials does not match',401);
         }

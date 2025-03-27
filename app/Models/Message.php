@@ -11,6 +11,7 @@ class Message extends Model
         
         'content',
         'image',
-        'user_id',
+        'receiver_id',
+        'sender_id',
     ];
 }
