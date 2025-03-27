@@ -6,7 +6,6 @@ use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
