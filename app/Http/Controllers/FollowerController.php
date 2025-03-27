@@ -66,10 +66,11 @@ class FollowerController extends Controller
 
     private function GetFollowing(): FollowerCollection{
         $Followers=follower::where("user_id",Auth::user()->id)->with('FollowedUser')->get()->map(function($follower){
+        //    dd($follower->id);
             return [
-                
+            
                 'user'=>$follower->FollowedUser,
-                'isHidden'=>$follower->isHidden,
+                'followinfo'=>$follower,
             ];
         });
         return $Followers=new FollowerCollection($Followers);
@@ -79,7 +80,7 @@ class FollowerController extends Controller
             return [
                 
                 'user'=>$follower->user,
-                'isHidden'=>$follower->isHidden,
+                'followinfo'=>$follower,
             ];
         });
        return $Followers=new FollowerCollection($Followers);

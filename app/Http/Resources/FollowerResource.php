@@ -27,12 +27,12 @@ class FollowerResource extends JsonResource
         }else{
 
             return [
-                "id"=> $this['user']->id,
+                "id"=> $this['followinfo']->id,
                 "name"=> $this['user']->name,
                 "email"=> $this['user']->email,
                 "username"=> $this['user']->username,
                 "image"=> $this['user'] ->image,
-                "isHidden" => $this['isHidden'],
+                "isHidden" => $this['followinfo']->isHidden,
             ];
         }
     }
