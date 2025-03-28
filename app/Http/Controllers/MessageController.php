@@ -38,14 +38,23 @@ class MessageController extends Controller
         }
     }
     public function store($username,StoreMessageRequest $request){
+       
         if(!User::where("username",$username)->exists()){
             return $this->Error('',"User not found",404);
         }
-        $Message["receiver_id"]=User::where("username",$username)->first()->id;
+            $user=User::where("username",$username)->first();
+        $Message["receiver_id"]=$user->id;
+        if(!$user->privacySettings->isAllowedMessage){
+            return $this->Error('',"This user does not allow messages",401);
+        }elseif(!$user->privacySettings->acceptImage && $request->hasFile("image")){
+            return $this->Error('',"This user does not allow images",401);
+        }elseif(!$user->privacySettings->allowUnRegisteredToSendMessage&&$request->anonymous){
+            return $this->Error('',"This user does not allow anonymous messages",401);
+        }
         if(!$request->anonymous){
             $Token=PersonalAccessToken::findToken(request()->bearerToken());
             
-            if(request()->bearerToken()==null){
+            if($Token==null){
                 
                 return $this->Error('',"You must be logged in to send an unanonymous message",401);
             }

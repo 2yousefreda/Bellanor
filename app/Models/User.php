@@ -26,7 +26,10 @@ class User extends Authenticatable
         'username',
         'password',
     ];
-
+    public function privacySettings()
+    {
+        return $this->hasOne(UserPrivacySetting::class); // العلاقة بين المستخدم وجدول إعدادات الخصوصية
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

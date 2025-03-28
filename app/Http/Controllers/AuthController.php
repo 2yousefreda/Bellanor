@@ -15,14 +15,16 @@ use Ichtrojan\Otp\Otp;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserPrivacySettingController;
 
 
 use App\Treits\HttpResponses;
 // use phpDocumentor\Reflection\Location;
 
-class AuthController extends Controller
+class AuthController extends UserPrivacySettingController
 {
     use HttpResponses;
+
     public function Login(LoginUserRequest $request){
         $request->validated();
         if(!Auth::attempt($request->only('email','password'))){
@@ -68,6 +70,7 @@ class AuthController extends Controller
         $user=User::where('email',$request->email)->first();
         $user->email_verified_at=now();
         $user->save();
+        $this->InitializePrivacySetting();
         return $this->Success('','Email verified successfully, you can now use your account');
     }
     public function ForgetPassword(ForgetPasswordRequest $request){
