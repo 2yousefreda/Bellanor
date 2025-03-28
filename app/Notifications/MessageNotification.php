@@ -11,12 +11,22 @@ class MessageNotification extends Notification
 {
     use Queueable;
 
+
+    public $details;
+    public $Subject;
+    public $FromEmail;
+    public $Mailer;
+    public $Message;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($Message)
     {
-        //
+        $this->details= $Message;
+        $this->Message = $Message;
+        $this->Subject = "New Message";
+        $this->FromEmail = "Test@yousef.com";
+        $this->Mailer = 'smtp';
     }
 
     /**
@@ -32,12 +42,19 @@ class MessageNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable): MailMessage
     {
+        // dd($this->Message);
+        $UserName = $notifiable->name;
+        $SenderName=$this->Message['sender_name']??'Anonymous';
+       
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->mailer('smtp')
+            ->subject($this->Subject)
+            ->greeting('Hello '. $UserName)
+            ->line( $this->Message["content"])
+            ->line("From: ".$SenderName)
+            ->line( "At: ".now());
     }
 
     /**

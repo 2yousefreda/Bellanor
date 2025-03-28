@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Treits\HttpResponses;
+use App\Notifications\MessageNotification;
 
 use function PHPSTORM_META\type;
 
@@ -44,11 +45,11 @@ class MessageController extends Controller
         }
             $user=User::where("username",$username)->first();
         $Message["receiver_id"]=$user->id;
-        if(!$user->privacySettings->isAllowedMessage){
+        if(!$user->PrivacySettings->isAllowedMessage){
             return $this->Error('',"This user does not allow messages",401);
-        }elseif(!$user->privacySettings->acceptImage && $request->hasFile("image")){
+        }elseif(!$user->PrivacySettings->acceptImage && $request->hasFile("image")){
             return $this->Error('',"This user does not allow images",401);
-        }elseif(!$user->privacySettings->allowUnRegisteredToSendMessage&&$request->anonymous){
+        }elseif(!$user->PrivacySettings->allowUnRegisteredToSendMessage&&$request->anonymous){
             return $this->Error('',"This user does not allow anonymous messages",401);
         }
         if(!$request->anonymous){
@@ -58,17 +59,22 @@ class MessageController extends Controller
                 
                 return $this->Error('',"You must be logged in to send an unanonymous message",401);
             }
-            $user=$Token->tokenable;
-            $Message["sender_id"]=$user->id;
+            $sender=$Token->tokenable;
+            $Message["sender_id"]=$sender->id;
+            $Message["sender_name"]=$sender->name;
             
         }
         $Message['content']=$request->content;
+        // dd($user->name,$user->email);
         if(request()->hasFile('image')){
             $Message["image"]=StoreImage($request->file('image'),'MessageImages');
         }
-        
-      
+        if($user->PrivacySettings->allowToReceiveEmailNotifications){
+
+            $user->notify(new MessageNotification($Message));
+        }
         $Message=new MessageResource(Message::create( $Message));
+        // dd($Message);
         return $this->Success([
             "message"=> $Message
         ]);

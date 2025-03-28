@@ -16,7 +16,7 @@ class LoginNotification extends Notification
     public $FromEmail;
     public $Mailer;
     public $Location;
-    public $Device;
+
     /**
      * Create a new notification instance.
      */
