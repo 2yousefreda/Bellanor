@@ -15,15 +15,7 @@ class FollowerResource extends JsonResource
     public function toArray(Request $request): array
     {
       
-    //   $user = $this->user ? $this->user : $this;
-    //   return [
-    //       "id"=> $this->id,
-    //       "name"=> $user->name,
-    //       "email"=> $user->email,
-    //       "username"=> $user->username,
-    //       "image"=> $user->image,
-    //       "isHidden" => $this->isHidden,
-    //   ];
+
     
         if($this['user'] == null){
             return [
