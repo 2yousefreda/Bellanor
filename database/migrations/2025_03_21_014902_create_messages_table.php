@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('receiver_id')->constrained('users');
             $table->foreignId('sender_id')->nullable()->constrained('users');
-            $table->string('content');
+            $table->text('content');
             $table->string('image')->nullable();
             $table->boolean('favorite')->default(false);
             $table->timestamps();

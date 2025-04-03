@@ -76,14 +76,15 @@ class FollowerController extends Controller
         return $Followers=new FollowerCollection($Followers);
     }
     private function GetFollowers(){
-        $Followers=follower::where("followed_id",Auth::user()->id)->with('User')->get()->map(function($follower){
+        $Followers=follower::where("followed_id",Auth::user()->id)->with('User')->get()
+        ->map(function($follower){
             return [
                 
                 'user'=>$follower->user,
                 'followinfo'=>$follower,
             ];
         });
-       return $Followers=new FollowerCollection($Followers);
+       return $Followers=FollowerCollection::make($Followers);
     }
 
 }
