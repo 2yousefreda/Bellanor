@@ -91,6 +91,9 @@ The project can be run using the following command:
 php artisan serve
 ```
 
+## API Doc
+http://velanor.com/docs
+
 ## Contributing
 
 Contributions to the project can be made by creating a pull request on GitHub.
