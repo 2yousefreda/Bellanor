@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\follower;
+use App\Models\Follower;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\FollowRequest;
@@ -30,7 +30,7 @@ class FollowerController extends Controller
 
 
     private function IsFollow($User){
-        $Following=follower::where('followed_id',$User->id)->where('user_id', Auth::user()->id)->first();
+        $Following=Follower::where('followed_id',$User->id)->where('user_id', Auth::user()->id)->first();
         if($Following){
             
             
@@ -56,7 +56,7 @@ class FollowerController extends Controller
         return $this->Success(['Follow'=>new UserResource($User)]);       
     }
     public function UnFollow(User $User){
-        $follow=follower::where('followed_id',$User->id)->where('user_id', Auth::User()->id)->first();
+        $follow=Follower::where('followed_id',$User->id)->where('user_id', Auth::User()->id)->first();
         if($follow==null){
             return $this->Error('','you are not following this user',400);
         }
@@ -65,7 +65,7 @@ class FollowerController extends Controller
     }
 
     private function GetFollowing(): FollowerCollection{
-        $Followers=follower::where("user_id",Auth::user()->id)->with('FollowedUser')->get()->map(function($follower){
+        $Followers=Follower::where("user_id",Auth::user()->id)->with('FollowedUser')->get()->map(function($follower){
         //    dd($follower->id);
             return [
             
@@ -76,7 +76,7 @@ class FollowerController extends Controller
         return $Followers=new FollowerCollection($Followers);
     }
     private function GetFollowers(){
-        $Followers=follower::where("followed_id",Auth::user()->id)->with('User')->get()
+        $Followers=Follower::where("followed_id",Auth::user()->id)->with('User')->get()
         ->map(function($follower){
             return [
                 
