@@ -14,7 +14,7 @@ Velanor API is a project aimed at providing a robust and flexible API for use in
 - 📩 Ability to receive email notifications
 
 ## Idea 💡
-The idea behind the project is to provide a robust and flexible API that can be used in web and mobile applications. The project aims to provide a set of services that can be used to create powerful and flexible applications.
+Developed a RESTful API with Laravel to allow users to send anonymous or identified messages. The system includes a follow feature enabling users to track others' activities. Additionally, integrated email notifications to inform users about new messages, enhancing user engagement and communication within the platform.
 
 ## Project Structure 📂
 The project consists of a set of files and folders created using the Laravel framework. The project contains files that represent the API and the services provided.
