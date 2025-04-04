@@ -1,44 +1,38 @@
+# Velanor API Documentation 🚀
 
-# Velanor API Documentation
-
-## Introduction
-
+## Introduction 📝
 Velanor API is a project aimed at providing a robust and flexible API for use in web and mobile applications. The project aims to provide a set of services that can be used to create powerful and flexible applications.
 
-## Features
+## Features 🌟
 
-* Robust and flexible API that can be used in web and mobile applications
-* Set of services that can be used to create powerful and flexible applications
-* Full support for PHP language
-* Use of Laravel framework to create the project
-* Full support for MySQL database usage
-* Set of security features to ensure data security
-* Ability to receive notifications via email
+- ✅ Robust and flexible API that can be used in web and mobile applications
+- ⚡ Set of services that can be used to create powerful and flexible applications
+- 🖥️ Full support for PHP language
+- 🚀 Built with Laravel framework
+- 💾 Full support for MySQL database
+- 🔒 Security features to ensure data protection
+- 📩 Ability to receive email notifications
 
-## Idea
-
+## Idea 💡
 The idea behind the project is to provide a robust and flexible API that can be used in web and mobile applications. The project aims to provide a set of services that can be used to create powerful and flexible applications.
 
-## Project Structure
+## Project Structure 📂
+The project consists of a set of files and folders created using the Laravel framework. The project contains files that represent the API and the services provided.
 
-The project consists of a set of files and folders created using the Laravel framework. The project contains a set of files that represent the API, as well as a set of files that represent the services provided by the API.
+### Files and Folders 📁
 
-## Files and Folders
+- `app/Http/Resources` - API resources
+- `app/Http/Controllers` - API controllers
+- `config` - General project settings
+- `public` - Public-facing files
+- `resources/views` - User interface views
+- `routes` - API route definitions
 
-* `app/Http/Resources`: contains a set of files that represent the API
-* `app/Http/Controllers`: contains a set of files that represent the services provided by the API
-* `config`: contains a set of files that represent the general settings of the project
-* `public`: contains a set of files that represent the public interface of the project
-* `resources/views`: contains a set of files that represent the graphical interface of the project
-* `routes`: contains a set of files that represent the routes of the project
+## Database 🗄️
+The project uses MySQL as the database management system to store and manage API data.
 
-## Database
-
-The project uses MySQL as the database management system. The database is used to store and manage data for the API.
-
-## Database Configuration
-
-To configure the database, you need to update the `config/database.php` file with your MySQL database credentials.
+### Configuration ⚙️
+Update the `config/database.php` file with your MySQL database credentials:
 
 ```php
 'mysql' => [
@@ -56,9 +50,8 @@ To configure the database, you need to update the `config/database.php` file wit
 ],
 ```
 
-## Email Notifications
-
-The project uses the Laravel Mail system to send email notifications. To configure email notifications, you need to update the `config/mail.php` file with your email settings.
+## Email Notifications 📧
+The project uses Laravel's Mail system to send email notifications. Configure it in `config/mail.php`:
 
 ```php
 'mail' => [
@@ -75,35 +68,95 @@ The project uses the Laravel Mail system to send email notifications. To configu
 ],
 ```
 
-## Installation
-
-The project can be installed using the following command:
+## Installation 🛠️
+Install the project using the command:
 
 ```bash
 composer install
 ```
 
-## Running the Project
-
-The project can be run using the following command:
+## Running the Project ▶️
+Run the project using:
 
 ```bash
 php artisan serve
 ```
 
-## API Doc
-http://velanor.com/docs
+# 📌 API Routes Documentation 🚀
 
-## Contributing
+## 🔑 **Authentication Routes**  
+| Method | Endpoint | Controller | Action |
+|--------|---------|------------|--------|
+| **POST** | `/api/register` | `AuthController` | `register` |
+| **POST** | `/api/login` | `AuthController` | `login` |
+| **POST** | `/api/logout` | `AuthController` | `logout` |
+| **POST** | `/api/email-verification` | `AuthController` | `EmailVerification` |
+| **POST** | `/api/resend-email-verification` | `AuthController` | `ResendEmailVerification` |
+| **POST** | `/api/forget-password` | `AuthController` | `ForgetPassword` |
+| **POST** | `/api/reset-password` | `AuthController` | `ResetPassword` |
 
-Contributions to the project can be made by creating a pull request on GitHub.
+---
 
-## License
+## 👥 **User & Profile Routes**  
+| Method | Endpoint | Controller | Action |
+|--------|---------|------------|--------|
+| **GET** | `/api/profile` | `UserController` | `show` |
+| **PUT** | `/api/update-profile` | `UserController` | `update` |
+| **GET** | `/api/users` | `UserController` | `index` |
 
-The project is licensed under the MIT license.
+---
 
-## Acknowledgments
+## 🔏 **Privacy Settings**  
+| Method | Endpoint | Controller | Action |
+|--------|---------|------------|--------|
+| **GET** | `/api/privacy-settings` | `UserPrivacySettingController` | `Show` |
+| **PUT** | `/api/privacy-settings` | `UserPrivacySettingController` | `Update` |
 
-We thank all contributors to the project for their valuable contributions.
+---
 
-Please note that you need to configure the email settings in the `config/mail.php` file to receive email notifications.
+## 💬 **Messages Routes**  
+| Method | Endpoint | Controller | Action |
+|--------|---------|------------|--------|
+| **GET** | `/api/messages` | `MessageController` | `Index` |
+| **GET** | `/api/messages/{message}` | `MessageController` | `show` |
+| **PUT** | `/api/messages/{message}` | `MessageController` | `Favorite` |
+| **DELETE** | `/api/messages/{message}` | `MessageController` | `delete` |
+| **POST** | `/api/{username}` | `MessageController` | `store` |
+
+---
+
+## 🤝 **Followers Routes**  
+| Method | Endpoint | Controller | Action |
+|--------|---------|------------|--------|
+| **POST** | `/api/follow/{user}` | `FollowerController` | `Follow` |
+| **POST** | `/api/unfollow/{user}` | `FollowerController` | `UnFollow` |
+| **GET** | `/api/followers` | `FollowerController` | `index` |
+
+---
+
+## 📄 **Documentation & Misc Routes**  
+| Method | Endpoint | Controller | Action |
+|--------|---------|------------|--------|
+| **GET** | `/docs` | `Scribe` | - |
+| **GET** | `/docs.openapi` | `Scribe` | - |
+| **GET** | `/docs.postman` | `Scribe` | - |
+| **GET** | `/sanctum/csrf-cookie` | `CsrfCookieController` | `show` |
+| **GET** | `/storage/{path}` | `storage.local` | - |
+| **GET** | `/up` | - | - |
+
+---
+
+### 🎯 **Notes:**
+- 🛡️ **Protected routes** may require authentication.
+- 🔄 `{username}` and `{message}` are **dynamic parameters**.
+📌 **API Documentation:** [http://velanor.com/docs](http://velanor.com/docs)
+
+
+## Contributing 🤝
+Contributions are welcome! Submit a pull request on GitHub.
+
+## License 📜
+This project is licensed under the **MIT License**.
+
+## Acknowledgments 🎉
+Big thanks to all contributors for their support and contributions! 🙌
