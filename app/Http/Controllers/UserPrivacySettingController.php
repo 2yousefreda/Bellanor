@@ -8,27 +8,27 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserPrivacySettingRequest;
 use App\Http\Resources\UserPrivacySettingResource;
 use App\Models\UserPrivacySetting;
+use App\Services\UserPrivacySettingService;
 
 class UserPrivacySettingController extends Controller
 {
-use HttpResponses;
+   
+    protected $UserSettings;
+
+    public function __construct(UserPrivacySettingService $UserSettings)
+    {
+        $this->UserSettings = $UserSettings;
+    }
+
     protected function InitializePrivacySetting(){
-        $user = Auth::user();
-        UserPrivacySetting::create([
-            'user_id'=> $user->id,
-        ]);
+        return $this->UserSettings->InitializePrivacySetting();
     }
     public function Show(){
-        $user = Auth::user();
-        $Setting = UserPrivacySetting::where('user_id', $user->id)->first();
-        $Setting= new UserPrivacySettingResource($Setting);
-        return $this->Success($Setting);
+        return $this->UserSettings->Show();
+       
     }
     public function Update(UserPrivacySettingRequest $request){
-        $user = Auth::user();
-        $Setting = UserPrivacySetting::where('user_id', $user->id)->first();
-        $Setting->update($request->validated());
-        $Setting= new UserPrivacySettingResource($Setting);
-        return $this->Success($Setting);
+        return $this->UserSettings->Update($request);
+       
     }
 }

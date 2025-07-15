@@ -12,13 +12,13 @@ class UserController extends Controller
 {
     use HttpResponses;
     public function index(){
-        $users= new UserCollection(User::all());
+        $users= UserResource::collection(User::all());
         return $this->Success([
             "user"=> $users
         ]);
     }
     public function show(){
-        $user= new UserResource(Auth::user());
+        $user= UserResource::make(Auth::user());
         return $this->Success([
             "user"=> $user
         ]);
@@ -37,7 +37,7 @@ class UserController extends Controller
         }
         $user= request()->user();
         $user->update($data);
-        $user= new UserResource( Auth::user());
+        $user= UserResource::make( Auth::user());
         return $this->Success([
             "user"=> $user
         ]);
