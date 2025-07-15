@@ -24,11 +24,11 @@ class MessageController extends Controller
        
         return $this->MessageService->storeMessage($username, $request);
     }
-    public function show(Message $Message){
+    public function show($Message){
 
         return $this->MessageService->showMessage($Message);
     }
-    public function Favorite(Message $Message){
+    public function Favorite($Message){
 
         return $this->MessageService->addMessageToFavorites($Message);
     }

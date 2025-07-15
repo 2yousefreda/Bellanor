@@ -82,11 +82,12 @@ class MessageService
     }
     public function showMessage($Message)
     {
-
-        if ($Message->receiver_id != Auth::user()->id && $Message->sender_id != Auth::user()->id) {
-            return $this->Error('', "You are not authorized to view this message", 401);
+        $Message = Message::find($Message);
+     
+        if (!$Message||($Message->receiver_id != Auth::user()->id && $Message->sender_id != Auth::user()->id)) {
+            return $this->Error('', "Message not found", 401);
         }
-        $Message = new MessageResource($Message);
+        $Message = MessageResource::make($Message);
         if ($Message->sender_id == Auth::user()->id) {
 
             return $this->Success($Message, 'you mustn\'t show favorite value');
@@ -96,9 +97,9 @@ class MessageService
     }
     public function addMessageToFavorites($Message)
     {
-
-        if ($Message->receiver_id != Auth::user()->id) {
-            return $this->Error('', "You are not authorized to favorite this message", 401);
+        $Message = Message::find($Message);
+        if (!$Message || ($Message->receiver_id != Auth::user()->id)) {
+            return $this->Error('', "message not found", 404);
         }
 
         $Message->favorite = !$Message->favorite;
