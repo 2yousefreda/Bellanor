@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Stevebauman\Location\Facades\Location;
 
-class LoginNotification extends Notification
+class LoginNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     public $Message;
@@ -20,21 +20,15 @@ class LoginNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
-    {
-        $this->Message = "You have successfully logged in";
-        $this->Subject = "Login Notification";
-        $this->FromEmail = "Test@yousef.com";
-        $this->Mailer = 'smtp';
-       $this->Location=Location::get("156.201.178.90");
-       $this->Location=[
-        "Ip"=>$this->Location->ip,
-        "CountryName"=>$this->Location->countryName,
-        "RegionName"=>$this->Location->regionName,
-        "CityName"=>$this->Location->cityName,
-    ];
-        
-    }
+  public function __construct($locationInfo)
+{
+    $this->Message = "You have successfully logged in";
+    $this->Subject = "Login Notification";
+    $this->FromEmail = "Test@yousef.com";
+    $this->Mailer = 'smtp';
+    $this->Location = $locationInfo;
+    
+}
 
     /**
      * Get the notification's delivery channels.
@@ -63,10 +57,10 @@ class LoginNotification extends Notification
             ->subject($this->Subject)
             ->greeting('Hello '. $UserName)
             ->line($Message)
-            ->line( "IP:".$this->Location['Ip'])
-            ->line( "CityName:".$this->Location['CityName'])
-            ->line( "RegionName:".$this->Location['RegionName'])
-            ->line( "CityName:".$this->Location['CityName'])
+            ->line("IP: " . ($this->Location['Ip']))
+            ->line("CityName: " . ($this->Location['CityName']))
+            ->line("RegionName: " . ($this->Location['RegionName']))
+            ->line("CountryName: " . ($this->Location['CountryName']))
             ->line( "At: ".now());
            
             
