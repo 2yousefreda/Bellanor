@@ -12,7 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Services\UserPrivacySettingService;
-
+use App\Jobs\SendLoginNotificationJob;
 
 use App\Treits\HttpResponses;
 
@@ -32,7 +32,15 @@ class AuthService extends UserPrivacySettingService
             return $this->Error('', 'Credentials does not match', 401);
         }
         $user = User::where('email', $request->email)->first();
-        $user->notify(new LoginNotification());
+        // dd($user);
+        $ip = request()->ip();
+// $start = microtime(true);
+        SendLoginNotificationJob::dispatch($user);
+
+        // $end = microtime(true);
+// $duration = $end - $start;
+
+// logger("Login request (with queue) took: {$duration} seconds");
         return $this->Success([
             'user' => $user,
             'token' => $user->createToken('Api Tocken of ' . $user->name)->plainTextToken
