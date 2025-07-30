@@ -1,4 +1,4 @@
-# Velanor API Documentation 🚀
+# Bellanor API Documentation 🚀
 
 ## Introduction 📝
 Velanor API is a project aimed at providing a robust and flexible API for use in web and mobile applications. The project aims to provide a set of services that can be used to create powerful and flexible applications.
@@ -12,6 +12,28 @@ Velanor API is a project aimed at providing a robust and flexible API for use in
 - 💾 Full support for MySQL database
 - 🔒 Security features to ensure data protection
 - 📩 Ability to receive email notifications
+- 🧠 AI Integration This project uses Google's Gemini AI model to automatically detect and filter out insulting or inappropriate messages before they are delivered to the user. This helps maintain a safer and more respectful environment for users.
+
+
+## 🔒 User Privacy Settings Feature
+
+A new feature has been added to support **customizable user privacy settings** through the `user_privacy_settings` table. Each user can now control how they interact with the messaging system.
+
+### Fields:
+
+- `isAllowedMessage`:  
+  Allows the user to completely disable or enable receiving messages.
+
+- `acceptImage`:  
+  If disabled, any image content in messages will be blocked.
+
+- `allowUnRegisteredToSendMessage`:  
+  Determines whether guests (users without accounts) are allowed to send messages.
+
+- `allowToReceiveEmailNotifications`:  
+  Controls whether the user wants to receive email notifications when a new message is received.
+
+This feature helps users manage their privacy and enhances the flexibility and security of the messaging system.
 
 ## Idea 💡
 Developed a RESTful API with Laravel to allow users to send anonymous or identified messages. The system includes a follow feature enabling users to track others' activities. Additionally, integrated email notifications to inform users about new messages, enhancing user engagement and communication within the platform.
@@ -117,7 +139,7 @@ php artisan serve
 ## 💬 **Messages Routes**  
 | Method | Endpoint | Controller | Action |
 |--------|---------|------------|--------|
-| **GET** | `/api/messages` | `MessageController` | `Index` |
+| **GET** | `/api/messages` ` ->take parametar type {received,favorites,sent}` | `MessageController` | `Index` | 
 | **GET** | `/api/messages/{message}` | `MessageController` | `show` |
 | **PUT** | `/api/messages/{message}` | `MessageController` | `Favorite` |
 | **DELETE** | `/api/messages/{message}` | `MessageController` | `delete` |
