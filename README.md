@@ -102,6 +102,7 @@ Run the project using:
 
 ```bash
 php artisan serve
+php artisan queue:work
 ```
 
 # 📌 API Routes Documentation 🚀
